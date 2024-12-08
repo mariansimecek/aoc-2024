@@ -8,7 +8,7 @@ import "core:strconv"
 import "core:strings"
 
 main :: proc() {
-	data, ok := os.read_entire_file("day1_input.txt")
+	data, ok := os.read_entire_file("input_data/day1_input.txt")
 	if !ok {
 		fmt.println("Error reading file")
 		os.exit(1)

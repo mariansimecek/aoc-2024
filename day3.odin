@@ -13,7 +13,7 @@ Parser :: struct {
 }
 
 main :: proc() {
-	bytes, ok := os.read_entire_file("day3_input.txt")
+	bytes, ok := os.read_entire_file("input_data/day3_input.txt")
 
 	if !ok {
 		fmt.println("Error reading file")

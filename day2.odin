@@ -14,7 +14,7 @@ Tendency :: enum {
 }
 
 main :: proc() {
-	bytes, ok := os.read_entire_file("day2_input.txt")
+	bytes, ok := os.read_entire_file("input_data/day2_input.txt")
 	if !ok {
 		fmt.println("Error reading file")
 		os.exit(1)
