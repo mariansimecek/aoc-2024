@@ -5,12 +5,8 @@ import "core:os"
 import "core:strings"
 
 main :: proc() {
-	bytes, ok := os.read_entire_file("input_data/day4_input.txt")
+	bytes := #load("../input_data/day4_input.txt")
 
-	if !ok {
-		fmt.println("Error reading file")
-		os.exit(1)
-	}
 	data := string(bytes)
 
 	line_width := strings.index_rune(data, '\n') + 1
