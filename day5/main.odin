@@ -7,7 +7,7 @@ import "core:strconv"
 import "core:strings"
 
 Rule :: [2]int
-Pages :: [dynamic]int
+Print_Order :: [dynamic]int
 
 result_sum := 0
 
@@ -16,7 +16,7 @@ main :: proc() {
 
 	data := string(bytes)
 	rules := [dynamic]Rule{}
-	pages := [dynamic]Pages{}
+	pages := [dynamic]Print_Order{}
 
 	parsing_rules := true
 	for line in strings.split_lines(data) {
@@ -29,8 +29,8 @@ main :: proc() {
 			rule := parse_rule(line)
 			append(&rules, rule)
 		} else {
-			page := Pages{}
-			parse_pages(&line, &page)
+			page := Print_Order{}
+			parse_print_order(&line, &page)
 			append(&pages, page)
 		}
 	}
@@ -55,19 +55,18 @@ parse_rule :: proc(line: string) -> Rule {
 	return {num1, num2}
 }
 
-parse_pages :: proc(line: ^string, pages: ^Pages) {
+parse_print_order :: proc(line: ^string, print_order: ^Print_Order) {
 	for char in strings.split_iterator(line, ",") {
 		num, _ := strconv.parse_int(char)
-		append(pages, num)
+		append(print_order, num)
 	}
 }
 
 
-check_order :: proc(pages: ^Pages, rules: ^[dynamic]Rule) -> bool {
+check_order :: proc(print_order: ^Print_Order, rules: ^[dynamic]Rule) -> bool {
 	for &rule in rules {
-		to := len(pages) - 1
-		for i in 1 ..< (len(pages) - 1) {
-			result := check_rule(pages[i], pages[0:i], pages[i + 1:], &rule)
+		for i in 1 ..< (len(print_order) - 1) {
+			result := check_rule(print_order[i], print_order[0:i], print_order[i + 1:], &rule)
 
 			if !result {
 				return false
@@ -75,7 +74,6 @@ check_order :: proc(pages: ^Pages, rules: ^[dynamic]Rule) -> bool {
 		}
 	}
 	return true
-
 }
 
 check_rule :: proc(current: int, prev: []int, next: []int, rule: ^Rule) -> bool {
